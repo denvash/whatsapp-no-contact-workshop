@@ -2,9 +2,8 @@
 const defaultTheme = require(`tailwindcss/defaultTheme`);
 
 module.exports = {
-  mode: `jit`,
-  plugins: [
-  ],
+  // mode: `jit`,
+  plugins: [],
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
