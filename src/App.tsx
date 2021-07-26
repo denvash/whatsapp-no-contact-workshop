@@ -1,6 +1,9 @@
+import {StarIcon} from '@heroicons/react/solid';
+import {classNames} from './utils/common';
+
 export function App() {
   return (
-    <div className="bg-white w-screen h-screen flex flex-col gap-8 justify-center items-center justify-items-center">
+    <div className="bg-gradient-to-r from-green-100 via-green-50 to-green-200 w-screen h-screen flex flex-col gap-8 justify-center items-center justify-items-center">
       <div className="w-full max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
         <div className="relative rounded-2xl px-6 py-10 bg-green-500 overflow-hidden shadow-xl sm:px-12 sm:py-20">
           <div
@@ -31,7 +34,7 @@ export function App() {
                   No Contact Whatsapp Message
                 </h2>
                 <p className="mx-auto max-w-2xl text-lg text-green-200">
-                  It's free, just use it
+                  Lorem Ipsum
                 </p>
               </div>
               <form
@@ -47,7 +50,7 @@ export function App() {
                       type="text"
                       name="company-website"
                       id="company-website"
-                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300"
+                      className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-green-500 focus:border-green-500 sm:text-sm border-gray-300"
                       placeholder="5554321"
                     />
                   </div>
@@ -85,6 +88,9 @@ export function App() {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">Favorite</span>
+                    </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -107,8 +113,22 @@ export function App() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {people.map(person => (
-                    <tr key={`${person.number.prefix}${person.number.number}`}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <tr
+                      key={`${person.number.prefix}${person.number.number}`}
+                      className="hover:bg-green-50 transition-color ease-in-out duration-500">
+                      <td className="px-6 whitespace-nowrap text-sm font-medium text-gray-900">
+                        <div
+                          className={classNames(
+                            person.favorite
+                              ? `text-yellow-400`
+                              : `text-gray-200`,
+                            `hover:text-yellow-300 cursor-pointer transition ease-in-out duration-700`,
+                          )}>
+                          <span className="sr-only">Points</span>
+                          <StarIcon className="h-5 w-5 " aria-hidden="true" />
+                        </div>
+                      </td>
+                      <td className="pr-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {person.name}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -118,11 +138,23 @@ export function App() {
                         {`${person.number.prefix}-${person.number.number}`}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a
-                          href="#"
-                          className="text-green-600 hover:text-green-900">
-                          Edit
-                        </a>
+                        <span className="relative z-0 inline-flex shadow-sm rounded-md">
+                          <button
+                            type="button"
+                            className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+                            Message
+                          </button>
+                          <button
+                            type="button"
+                            className="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+                            Edit
+                          </button>
+                          <button
+                            type="button"
+                            className="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500">
+                            Remove
+                          </button>
+                        </span>
                       </td>
                     </tr>
                   ))}
@@ -138,8 +170,30 @@ export function App() {
 
 const people = [
   {
-    name: `Dennis Vash`,
-    number: {prefix: `054`, number: `5554120`},
-    description: 'Some cool dude',
+    name: `Alister Dorsey`,
+    number: {prefix: `054`, number: `5156478`},
+    description: `Dolor sit amet`,
+    favorite: true,
+  },
+  {
+    name: `Georgina Philip`,
+    number: {prefix: `055`, number: `5158120`},
+    description: `Suspendisse aliquam`,
+    favorite: true,
+  },
+  {
+    name: `Terrell Derrick`,
+    number: {prefix: `057`, number: `5472113`},
+    description: `Curabitur sagittis`,
+  },
+  {
+    name: `Tomas Chavez`,
+    number: {prefix: `053`, number: `5144598`},
+    description: `Duis feugiat`,
+  },
+  {
+    name: `Fearne Mathis`,
+    number: {prefix: `055`, number: `5567052`},
+    description: `Quis ultrices`,
   },
 ];
