@@ -1,5 +1,5 @@
-import {Button} from '@components';
 import {StarIcon} from '@heroicons/react/solid';
+import {Button} from 'components';
 import {classNames} from './utils/common';
 
 export function App() {
@@ -41,7 +41,7 @@ export function App() {
               <form
                 action="#"
                 className="sm:mx-auto sm:max-w-lg sm:flex flex-col gap-4">
-                <div className="flex gap-4">
+                <div className="flex gap-2">
                   <div className="flex rounded-md shadow-sm flex-grow">
                     <input
                       className="inline-flex items-center px-3 rounded-l-md  border-r-0 bg-gray-50 text-gray-500 sm:text-sm w-16"
@@ -55,7 +55,9 @@ export function App() {
                       placeholder="5554321"
                     />
                   </div>
-                  <Button type="submit">Send</Button>
+                  <Button type="submit" size="lg">
+                    Send
+                  </Button>
                 </div>
                 <div className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-green-600 focus-within:border-green-600 bg-white">
                   <label
