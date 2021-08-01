@@ -1,23 +1,13 @@
-import {ContactNumber, DEFAULT_CONTACT_NUMBER} from 'context';
+import {useContacts} from 'hooks';
 import {useContactNumber} from 'hooks/useContactNumber';
-import {SyntheticEvent, useState} from 'react';
-import {Button} from '../atoms';
+import {SyntheticEvent, useCallback, useState} from 'react';
+import {Button, Input} from '../atoms';
 
-type InputEventType = SyntheticEvent<HTMLInputElement | HTMLTextAreaElement>;
-
-export function MessageForm() {
+export function ContactMessage() {
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
 
   const {contactNumber, setContactNumber} = useContactNumber();
-
-  const genHandleChange =
-    (key: 'prefix' | `number`) => (event: InputEventType) => {
-      const {value} = event.currentTarget;
-      setContactNumber(prevState => ({
-        ...prevState,
-        [key]: value,
-      }));
-    };
+  const {setContacts} = useContacts();
 
   const handleMessageChange = (event: SyntheticEvent<HTMLTextAreaElement>) => {
     setMessage(event.currentTarget.value);
@@ -27,29 +17,65 @@ export function MessageForm() {
     contactNumber.number
   }?text=${encodeURI(message ?? '')}`;
 
+  const onSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setContacts(prevContacts => {
+      if (prevContacts) {
+        return [
+          ...prevContacts,
+          {
+            id: prevContacts.length,
+            name: 'Blabla',
+            description: 'des',
+            number: contactNumber,
+            favorite: false,
+          },
+        ];
+      }
+      return prevContacts;
+    });
+  };
+
+  const onChangePrefix = useCallback(
+    (value: string) => {
+      setContactNumber(prevState => ({
+        ...prevState,
+        prefix: value,
+      }));
+    },
+    [setContactNumber],
+  );
+  const onChangeNumber = useCallback(
+    (value: string) => {
+      setContactNumber(prevState => ({
+        ...prevState,
+        prefix: value,
+      }));
+    },
+    [setContactNumber],
+  );
+
   return (
     <form
       action="#"
       className="sm:mx-auto sm:max-w-lg sm:flex flex-col gap-2"
-      onSubmit={e => {
-        e.preventDefault();
-      }}>
+      onSubmit={onSubmit}>
       <div className="flex gap-2">
         <div className="flex rounded-md shadow-sm flex-grow ">
-          <input
+          <Input
             className="items-center px-4 rounded-l-md bg-gray-50 text-gray-800 sm:text-sm w-20"
             placeholder="054"
             name="prefix"
             value={contactNumber.prefix}
-            onChange={genHandleChange(`prefix`)}
+            onChange={onChangePrefix}
           />
-          <input
-            className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md sm:text-sm border-gray-300"
+          <Input
+            className="flex-1 min-w-0 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
             placeholder="5554123"
             type="text"
             name="number"
             value={contactNumber.number}
-            onChange={genHandleChange(`number`)}
+            onChange={onChangeNumber}
           />
         </div>
         <Button type="submit" size="lg" href={whatsappHref}>

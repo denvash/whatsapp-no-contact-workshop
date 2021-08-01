@@ -1,2 +1,2 @@
-export * from './ContactMessage';
+export * from './ContactMessageLayout';
 export * from './ContactTable';

@@ -1,2 +1,3 @@
-export * from './MessageForm';
-export * from './ContactRowEntry';
+export * from './ContactMessage';
+export * from './ContactRow';
+export * from './ContactRowEditable';

@@ -5,17 +5,24 @@ type FontType = `medium` | `normal`;
 
 type Props = DefaultComponent & {
   font?: FontType;
+  span?: number;
 };
 
 export const TableRowCell = (props: Props) => {
-  const {children, font: textType = `normal`, className = ``} = props;
+  const {
+    children,
+    font: textType = `normal`,
+    className = ``,
+    span = undefined,
+  } = props;
   return (
     <td
       className={classNames(
+        className,
         `pr-6 py-4 whitespace-nowrap text-sm`,
         FONT_TYPE[textType],
-        className,
-      )}>
+      )}
+      colSpan={span}>
       {children}
     </td>
   );

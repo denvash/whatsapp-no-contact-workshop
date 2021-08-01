@@ -11,6 +11,7 @@ type ButtonProps = DefaultComponent & {
   type?: ButtonType;
   use?: ButtonUse;
   href?: string;
+  target?: `_blank`;
 };
 
 const BUTTON_SIZE: {[key in ButtonSize]: string} = {
@@ -22,8 +23,8 @@ const BUTTON_SIZE: {[key in ButtonSize]: string} = {
 
 const BUTTON_COLOR: {[key in ButtonUse]: string} = {
   destructive: `text-white bg-red-600 hover:bg-red-700`,
-  primary: `text-white bg-green-400 hover:bg-green-300 `,
-  secondary: ``,
+  primary: `text-white bg-green-400 hover:bg-green-300`,
+  secondary: `text-white bg-gray-400 hover:bg-gray-500`,
 };
 
 export const Button = (props: ButtonProps): ReactElement => {
@@ -35,11 +36,15 @@ export const Button = (props: ButtonProps): ReactElement => {
     type = `button`,
     href = ``,
     onClick = NoopFn,
+    target = ``,
   } = props;
   return (
     <a
-      {...{onClick, type, href}}
-      target="_blank"
+      {...{type, href, target}}
+      onClick={e => {
+        e.preventDefault();
+        onClick();
+      }}
       className={classNames(
         `inline-flex items-center border border-transparent font-medium bg-opacity-100 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 justify-center`,
         BUTTON_SIZE[size],

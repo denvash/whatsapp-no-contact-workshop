@@ -1,7 +1,7 @@
-import {MessageForm} from 'components/molecules';
+import {ContactMessage} from 'components/molecules';
 import {BackgroundSVG} from '../atoms';
 
-export function ContactMessage() {
+export function ContactMessageLayout() {
   return (
     <div className="w-full max-w-md px-4 sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8">
       <div className="relative rounded-2xl px-6 py-10 bg-green-500 overflow-hidden shadow-xl sm:px-12 sm:py-16">
@@ -20,7 +20,7 @@ export function ContactMessage() {
                 Facebook Workshop
               </p>
             </div>
-            <MessageForm />
+            <ContactMessage />
           </div>
         </div>
       </div>
