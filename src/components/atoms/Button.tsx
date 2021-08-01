@@ -50,9 +50,3 @@ export const Button = (props: ButtonProps): ReactElement => {
     </a>
   );
 };
-
-/*
-
-block w-full rounded-md border bg-opacity-100 border-transparent px-5 py-3 bg-green-400 text-base font-medium text-white shadow hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-600 sm:px-10
-
-*/

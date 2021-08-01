@@ -25,3 +25,4 @@ const isBooleanType = (value: unknown) => typeof value === `boolean`;
 
 export const toBoolean = (value: boolean | string): boolean | string =>
   isBooleanType(value) ? value : isFalseString(value as string) ? false : true;
+stringify;
