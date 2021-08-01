@@ -10,6 +10,7 @@ type ButtonProps = DefaultComponent & {
   size?: ButtonSize;
   type?: ButtonType;
   use?: ButtonUse;
+  href?: string;
 };
 
 const BUTTON_SIZE: {[key in ButtonSize]: string} = {
@@ -32,11 +33,13 @@ export const Button = (props: ButtonProps): ReactElement => {
     use = `primary`,
     size = `xs`,
     type = `button`,
+    href = ``,
     onClick = NoopFn,
   } = props;
   return (
-    <button
-      {...{onClick, type}}
+    <a
+      {...{onClick, type, href}}
+      target="_blank"
       className={classNames(
         `inline-flex items-center border border-transparent font-medium bg-opacity-100 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 justify-center`,
         BUTTON_SIZE[size],
@@ -44,7 +47,7 @@ export const Button = (props: ButtonProps): ReactElement => {
         className,
       )}>
       {children}
-    </button>
+    </a>
   );
 };
 
