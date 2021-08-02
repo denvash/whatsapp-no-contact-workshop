@@ -14,7 +14,6 @@ export const useLocalStorage = <T>(
 ): ReturnType<T> => {
   const [value, setValue] = useState<T | null>(() => {
     const parsed = safeParserJson(window.localStorage.getItem(key));
-    console.log(parsed);
     return parsed ?? initialValue;
   });
 

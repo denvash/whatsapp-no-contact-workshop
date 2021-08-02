@@ -2,8 +2,7 @@
 const defaultTheme = require(`tailwindcss/defaultTheme`);
 
 module.exports = {
-  // mode: `jit`,
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
     extend: {
