@@ -42,8 +42,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.3.3",
-    "@types/lodash.isequal": "^4.5.5"
-  }
+  "devDependencies": {}
 }
