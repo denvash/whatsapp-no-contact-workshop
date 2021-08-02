@@ -4,7 +4,7 @@ import {classNames, NoopFn} from 'utils';
 
 type ButtonUse = `primary` | `secondary` | `destructive`;
 type ButtonSize = `xs` | `sm` | `md` | `lg`;
-type ButtonType = `button` | `submit`;
+type ButtonType = `button` | `submit` | `link`;
 
 type ButtonProps = DefaultComponent & {
   size?: ButtonSize;
@@ -38,16 +38,21 @@ export const Button = (props: ButtonProps): ReactElement => {
     onClick = NoopFn,
     target = ``,
   } = props;
-  return (
-    <a
-      {...{type, href, target, onClick}}
-      className={classNames(
-        `inline-flex items-center border border-transparent font-medium bg-opacity-100 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 justify-center`,
-        BUTTON_SIZE[size],
-        BUTTON_COLOR[use],
-        className,
-      )}>
+  const $className = classNames(
+    buttonStyle,
+    BUTTON_SIZE[size],
+    BUTTON_COLOR[use],
+    className,
+  );
+  return type === 'button' || type === 'submit' ? (
+    <button {...{type, target, onClick}} className={$className}>
+      {children}
+    </button>
+  ) : (
+    <a {...{href, target, onClick}} className={$className}>
       {children}
     </a>
   );
 };
+
+const buttonStyle = `inline-flex items-center border border-transparent font-medium bg-opacity-100 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 justify-center`;

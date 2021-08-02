@@ -51,7 +51,7 @@ export function ContactMessage() {
           placeholder="5554123"
           maxLength={7}
         />
-        <Button size="lg" href={whatsappHref} target="_blank">
+        <Button type="link" size="lg" href={whatsappHref} target="_blank">
           Send
         </Button>
       </div>

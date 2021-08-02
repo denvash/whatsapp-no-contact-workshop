@@ -1,25 +1,25 @@
 import {ContactRow} from 'components';
 import {useContactNumber, useContacts} from 'hooks';
 import {Button, TableHeaderCell, TableRow, TableRowCell} from '../atoms';
-import {useToggle} from 'hooks/useToggle';
 import {ContactRowEditable} from 'components/molecules';
 import {Contact, DEFAULT_CONTACT_NUMBER} from 'context';
+import {useState} from 'react';
 
 export function ContactTable() {
   const {contacts, setContacts} = useContacts();
   const {setContactNumber} = useContactNumber();
-  const [isAddContact, toggleIsAddContact] = useToggle(false);
+  const [isAddContactView, setIsAddContactView] = useState(false);
 
   const onSubmit = (contact: Contact) => {
     setContacts(prevContacts =>
       prevContacts ? [...prevContacts, contact] : prevContacts,
     );
-    toggleIsAddContact();
   };
 
   const onFavorite = (id: number) => {
     const favoriteIndex = contacts.findIndex(contact => contact.id === id);
     const favoriteContact = contacts[favoriteIndex];
+
     const newContacts = Object.assign([...contacts], {
       [favoriteIndex]: {
         ...favoriteContact,
@@ -74,19 +74,19 @@ export function ContactTable() {
                     />
                   );
                 })}
-                {isAddContact && (
+                {isAddContactView && (
                   <ContactRowEditable
                     onSubmit={onSubmit}
-                    onCancel={toggleIsAddContact}
+                    onCancel={() => setIsAddContactView(false)}
                   />
                 )}
-                {!isAddContact && (
+                {!isAddContactView && (
                   <TableRow>
                     <TableRowCell className="text-center" span={5}>
                       <Button
                         use="secondary"
                         type="button"
-                        onClick={toggleIsAddContact}>
+                        onClick={() => setIsAddContactView(true)}>
                         Add New Contact
                       </Button>
                     </TableRowCell>
