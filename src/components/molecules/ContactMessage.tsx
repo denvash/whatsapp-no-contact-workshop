@@ -1,13 +1,12 @@
-import {useContacts} from 'hooks';
 import {useContactNumber} from 'hooks/useContactNumber';
 import {SyntheticEvent, useCallback, useState} from 'react';
-import {Button, Input} from '../atoms';
+import {Button} from '../atoms';
+import {InputGroup} from './InputGroup';
 
 export function ContactMessage() {
   const [message, setMessage] = useState(DEFAULT_MESSAGE);
 
   const {contactNumber, setContactNumber} = useContactNumber();
-  const {setContacts} = useContacts();
 
   const handleMessageChange = (event: SyntheticEvent<HTMLTextAreaElement>) => {
     setMessage(event.currentTarget.value);
@@ -16,25 +15,6 @@ export function ContactMessage() {
   const whatsappHref = `${WHATSAPP_API_SEND_IL_NUMBER}${contactNumber.prefix}${
     contactNumber.number
   }?text=${encodeURI(message ?? '')}`;
-
-  const onSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setContacts(prevContacts => {
-      if (prevContacts) {
-        return [
-          ...prevContacts,
-          {
-            id: prevContacts.length,
-            name: 'Blabla',
-            description: 'des',
-            number: contactNumber,
-            favorite: false,
-          },
-        ];
-      }
-      return prevContacts;
-    });
-  };
 
   const onChangePrefix = useCallback(
     (value: string) => {
@@ -45,40 +25,33 @@ export function ContactMessage() {
     },
     [setContactNumber],
   );
+
   const onChangeNumber = useCallback(
     (value: string) => {
       setContactNumber(prevState => ({
         ...prevState,
-        prefix: value,
+        number: value,
       }));
     },
     [setContactNumber],
   );
 
   return (
-    <form
-      action="#"
-      className="sm:mx-auto sm:max-w-lg sm:flex flex-col gap-2"
-      onSubmit={onSubmit}>
+    <form action="#" className="sm:mx-auto sm:max-w-lg sm:flex flex-col gap-2">
       <div className="flex gap-2">
-        <div className="flex rounded-md shadow-sm flex-grow ">
-          <Input
-            className="items-center px-4 rounded-l-md bg-gray-50 text-gray-800 sm:text-sm w-20"
-            placeholder="054"
-            name="prefix"
-            value={contactNumber.prefix}
-            onChange={onChangePrefix}
-          />
-          <Input
-            className="flex-1 min-w-0 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-            placeholder="5554123"
-            type="text"
-            name="number"
-            value={contactNumber.number}
-            onChange={onChangeNumber}
-          />
-        </div>
-        <Button type="submit" size="lg" href={whatsappHref}>
+        <InputGroup
+          prefixProps={{
+            value: contactNumber.prefix,
+            onChange: onChangePrefix,
+            placeholder: `054`,
+            maxLength: 3,
+          }}
+          value={contactNumber.number}
+          onChange={onChangeNumber}
+          placeholder="0545554123"
+          maxLength={7}
+        />
+        <Button size="lg" href={whatsappHref}>
           Send
         </Button>
       </div>

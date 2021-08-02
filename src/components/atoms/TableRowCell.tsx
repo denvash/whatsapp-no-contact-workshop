@@ -18,8 +18,8 @@ export const TableRowCell = (props: Props) => {
   return (
     <td
       className={classNames(
+        `px-2 py-4 whitespace-nowrap text-sm`,
         className,
-        `pr-6 py-4 whitespace-nowrap text-sm`,
         FONT_TYPE[textType],
       )}
       colSpan={span}>

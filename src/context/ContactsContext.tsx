@@ -5,7 +5,7 @@ import {ContactNumber} from './ContactNumberContext';
 
 export type Contact = {
   description: string;
-  favorite: boolean;
+  isFavorite: boolean;
   id: number;
   name: string;
   number: ContactNumber;
@@ -22,21 +22,21 @@ export const DEFAULT_CONTACTS: Contact[] = [
     name: `Alister Dorsey`,
     number: {prefix: `054`, number: `5156478`},
     description: `Dolor sit amet`,
-    favorite: true,
+    isFavorite: true,
   },
   {
     id: -2,
     name: `Georgina Philip`,
     number: {prefix: `055`, number: `5158120`},
     description: `Suspendisse aliquam`,
-    favorite: true,
+    isFavorite: true,
   },
   {
     id: -3,
     name: `Terrell Derrick`,
     number: {prefix: `057`, number: `5472113`},
     description: `Curabitur sagittis`,
-    favorite: false,
+    isFavorite: false,
   },
 ];
 

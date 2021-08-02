@@ -1,13 +1,52 @@
 import {ContactRow} from 'components';
-import {useContacts} from 'hooks';
+import {useContactNumber, useContacts} from 'hooks';
 import {Button, TableHeaderCell, TableRow, TableRowCell} from '../atoms';
-import {DocumentAddIcon} from '@heroicons/react/outline';
 import {useToggle} from 'hooks/useToggle';
 import {ContactRowEditable} from 'components/molecules';
+import {Contact, DEFAULT_CONTACT_NUMBER} from 'context';
 
 export function ContactTable() {
-  const {contacts} = useContacts();
+  const {contacts, setContacts} = useContacts();
+  const {setContactNumber} = useContactNumber();
   const [isAddContact, toggleIsAddContact] = useToggle(false);
+
+  const onSubmit = (contact: Contact) => {
+    setContacts(prevContacts =>
+      prevContacts ? [...prevContacts, contact] : prevContacts,
+    );
+    toggleIsAddContact();
+  };
+
+  const onFavorite = (id: number) => {
+    const favoriteIndex = contacts.findIndex(contact => contact.id === id);
+    const favoriteContact = contacts[favoriteIndex];
+    const newContacts = Object.assign([...contacts], {
+      [favoriteIndex]: {
+        ...favoriteContact,
+        isFavorite: !favoriteContact.isFavorite,
+      },
+    });
+
+    const newSorted = newContacts.sort((a, b) => {
+      return Number(b.isFavorite) - Number(a.isFavorite);
+    });
+
+    setContacts(newSorted);
+  };
+
+  const onRemove = (id: number) => {
+    setContacts(prevContacts =>
+      prevContacts
+        ? prevContacts.filter(contact => contact.id !== id)
+        : prevContacts,
+    );
+  };
+
+  const onMessage = (id: number) => {
+    const targetContact = contacts.find(contact => contact.id === id);
+    setContactNumber(targetContact?.number ?? DEFAULT_CONTACT_NUMBER);
+  };
+
   return (
     <div className="flex flex-col ">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -24,10 +63,23 @@ export function ContactTable() {
                 </TableRow>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {contacts.map(contact => (
-                  <ContactRow key={contact.id} {...contact} />
-                ))}
-                {isAddContact && <ContactRowEditable onSubmit={() => {}} />}
+                {contacts.map(contact => {
+                  return (
+                    <ContactRow
+                      key={contact.id}
+                      {...contact}
+                      onFavorite={() => onFavorite(contact.id)}
+                      onRemove={() => onRemove(contact.id)}
+                      onMessage={() => onMessage(contact.id)}
+                    />
+                  );
+                })}
+                {isAddContact && (
+                  <ContactRowEditable
+                    onSubmit={onSubmit}
+                    onCancel={toggleIsAddContact}
+                  />
+                )}
                 {!isAddContact && (
                   <TableRow>
                     <TableRowCell className="text-center" span={5}>

@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
 import {classNames, NoopFn} from 'utils';
 
-type InputProps<T> = {
+type InputProps = {
   className?: string;
   innerRef?: {current: null | HTMLInputElement};
   onBlur?: () => void;
@@ -12,19 +12,25 @@ type InputProps<T> = {
   type?: string;
   value?: string;
   name?: string;
+  maxLength?: number;
 };
 
-export const Input = <T extends unknown>({
+export const Input = ({
   className = ``,
   innerRef,
   onChange = NoopFn,
   value = ``,
+  maxLength = Infinity,
   ...props
-}: InputProps<T>): React.ReactElement => {
+}: InputProps): React.ReactElement => {
   const [inputValue, setInputValue] = useState(value);
   const $onChange = useCallback(
-    ({currentTarget: {value}}) => setInputValue(value),
-    [],
+    ({currentTarget: {value}}) => {
+      if (value.length <= maxLength) {
+        setInputValue(value);
+      }
+    },
+    [maxLength],
   );
 
   useEffect(() => {

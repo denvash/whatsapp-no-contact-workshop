@@ -1,9 +1,7 @@
 import {
-  IS_WINDOW_DEFINED,
   removeLocalStorageItem,
   safeParserJson,
   setLocalStorageItem,
-  stringify,
 } from 'utils';
 import {useEffect, useState} from 'react';
 
@@ -14,11 +12,11 @@ export const useLocalStorage = <T>(
   key: string,
   initialValue?: T,
 ): ReturnType<T> => {
-  const [value, setValue] = useState<T | null>(
-    IS_WINDOW_DEFINED
-      ? safeParserJson(window.localStorage.getItem(key))
-      : stringify(initialValue),
-  );
+  const [value, setValue] = useState<T | null>(() => {
+    const parsed = safeParserJson(window.localStorage.getItem(key));
+    console.log(parsed);
+    return parsed ?? initialValue;
+  });
 
   useEffect(() => {
     value ? setLocalStorageItem(key, value) : removeLocalStorageItem(key);
