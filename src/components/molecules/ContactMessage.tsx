@@ -48,10 +48,10 @@ export function ContactMessage() {
           }}
           value={contactNumber.number}
           onChange={onChangeNumber}
-          placeholder="0545554123"
+          placeholder="5554123"
           maxLength={7}
         />
-        <Button size="lg" href={whatsappHref}>
+        <Button size="lg" href={whatsappHref} target="_blank">
           Send
         </Button>
       </div>

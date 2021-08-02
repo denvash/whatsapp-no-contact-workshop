@@ -40,11 +40,7 @@ export const Button = (props: ButtonProps): ReactElement => {
   } = props;
   return (
     <a
-      {...{type, href, target}}
-      onClick={e => {
-        e.preventDefault();
-        onClick();
-      }}
+      {...{type, href, target, onClick}}
       className={classNames(
         `inline-flex items-center border border-transparent font-medium bg-opacity-100 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-600 justify-center`,
         BUTTON_SIZE[size],
